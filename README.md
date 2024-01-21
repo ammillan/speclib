@@ -4,7 +4,7 @@ This thread-level speculation (TLS) library provides a framework to parallelize 
 
 ### Requirements and how to use
 
-This is a header-only library and only uses elements from the standard library, so it has no extra dependencies. You only need to include the files from the `include` directory in your project. The main file you must import in your project is `speclib\speclib.h` (e.g. `#include "speclib/speclib.h"`).
+This is a header-only library and only uses elements from the standard library, thus it has no extra dependencies. You only need to import the files from the `include` directory in your project. All files from `include` folder are needed, but you only must include in your code the main file `speclib\speclib.h` (e.g. `#include "speclib/speclib.h"`).
 
 The minimum version of C++ required by the library is C++14 (e.g. `-std=c++14`).
 
@@ -16,8 +16,8 @@ The provided tests and benchmarks can be compiled and executed using `cmake` and
 
 - The `include` subfolder contains all the files needed to use the library.
 
-- The `basic_tests` subfolder inside `tests` directory contains some basic test examples that allow you to quickly test the correct operation of the library.
+- The `tests/basic_tests` directory contains some basic test examples that allow you to quickly test the correct operation of the library.
 
-- The `benchmarks` folder inside `tests` directory contains some benchmark examples that can be used to evaluate the library performance. It also contains their sequential versions.
+- The `tests/benchmarks` directory contains some benchmark examples that can be used to evaluate the library performance. It also contains their sequential versions.
 
 - The `SpecLib` library and its model are described and compared with other alternatives in the publication [A new thread-level speculative automatic parallelization model and library based on duplicate code execution](https://www.researchsquare.com/article/rs-3405920/v1) ([DOI 10.21203/rs.3.rs-3405920/v1](https://doi.org/10.21203/rs.3.rs-3405920/v1)).

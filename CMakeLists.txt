@@ -24,8 +24,7 @@ if(NOT CMAKE_CXX_STANDARD)
   set( CMAKE_CXX_STANDARD 20 CACHE STRING "C++ standard to be used" )
 endif(NOT CMAKE_CXX_STANDARD)
 
-add_subdirectory( tests/basic_tests )
-add_subdirectory( tests/benchmarks )
+add_subdirectory( tests )
 
 install( DIRECTORY ${PROJECT_SOURCE_DIR}/include/speclib
          DESTINATION include

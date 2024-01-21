@@ -10,6 +10,8 @@
 # \author   Jose C. Cabaleiro   <jc.cabaleiro@usc.es>
 # \author   Francisco F. Rivera <ff.rivera@usc.es>
 
+cmake_minimum_required( VERSION 2.8...3.28 )
+
 set(benchmarks B-synthetic-fast_v1 D-2D-Hull-Disc-10M E-2D-Hull-Square-10M F-2D-Hull-Kuzmin-10M R-test_reduction R-test_reduction_atomic R-test_reduction_slow R-test_reduction_atomic_slow)
 
 if(NOT SLSHOWSTATS)
@@ -19,6 +21,12 @@ set_property(CACHE SLSHOWSTATS PROPERTY STRINGS "Disabled" "Minimal" "Detailed")
 if(NOT SLNOCANCEL)
   set(SLNOCANCEL OFF CACHE BOOL "Enable to suppress the cancellation check within loops" )
 endif(NOT SLNOCANCEL)
+if(NOT SLNOALLOCA)
+  set(SLNOALLOCA OFF CACHE BOOL "Enable to suppress the use of 'alloca' in SpecVector and use 'malloc' instead" )
+endif(NOT SLNOALLOCA)
+if(NOT SLALLOCAINMALLOCH)
+  set(SLALLOCAINMALLOCH OFF CACHE BOOL "Enable to indicate that 'alloca' function is defined in <malloc.h> instead of <alloca.h>" )
+endif(NOT SLALLOCAINMALLOCH)
 if(NOT ENABLE_DELAY)
   set(ENABLE_DELAY OFF CACHE BOOL "Enable artificial delay within loops" )
 endif(NOT ENABLE_DELAY)
@@ -59,6 +67,14 @@ foreach(benchmark ${benchmarks})
   if(SLNOCANCEL)
     target_compile_definitions( ${benchmark} PRIVATE SLNOCANCEL )
   endif(SLNOCANCEL)
+  
+  if(SLNOALLOCA)
+    target_compile_definitions( ${benchmark} PRIVATE NOALLOCA )
+  endif(SLNOALLOCA)
+  if(SLALLOCAINMALLOCH)
+    target_compile_definitions( ${benchmark} PRIVATE ALLOCAINMALLOCH )
+  endif(SLALLOCAINMALLOCH)
+  
   if(ENABLE_DELAY)
     target_compile_definitions( ${benchmark} PRIVATE ENABLE_DELAY )
   endif(ENABLE_DELAY)

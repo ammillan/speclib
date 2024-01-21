@@ -10,6 +10,8 @@
 # \author   Jose C. Cabaleiro   <jc.cabaleiro@usc.es>
 # \author   Francisco F. Rivera <ff.rivera@usc.es>
 
+cmake_minimum_required( VERSION 2.8...3.28 )
+
 set(sequentials B-synthetic-fast_v1_seq D-2D-Hull-Disc-10M_seq E-2D-Hull-Square-10M_seq F-2D-Hull-Kuzmin-10M_seq R-test_reduction_seq)
 
 add_executable( B-synthetic-fast_v1_seq B-synthetic-fast_v1_seq.cpp )
