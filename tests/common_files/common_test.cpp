@@ -226,7 +226,7 @@ void do_preheat() {
 #ifdef THREADINSTRUMENT
   ThreadInstrument::LockLog();
 #endif
-  SpecLib::specRun({NThreads, MinParalThreads}, 0, NM, 1, SpecLib::getNumIterationsPerChunk(NM, NChunks), preheat_pf, res_arr);
+  SpecLib::specRun({NThreads, MinParalThreads}, 0, NM, 1, SpecLib::getChunkSize(NM, NChunks), preheat_pf, res_arr);
 #ifdef THREADINSTRUMENT
   ThreadInstrument::UnlockLog();
 #endif
@@ -327,7 +327,7 @@ template<typename Ti, typename FRun, typename FReset, typename FTest, typename..
 bool bench(const typename std::remove_reference<Ti>::type begin, const Ti end, const typename std::remove_reference<Ti>::type step, const FRun& f_run, const FReset& f_reset, const FTest& f_test, double& avg_time , ArgT&&... args)
 { size_t i;
   bool test_ok = true;
-  const size_t calcChunk = SpecLib::getNumIterationsPerChunk(static_cast<size_t>((step >= 0) ? ((end - begin + step - 1) / step) : ((end - begin + step + 1) / step)), NChunks);
+  const size_t calcChunk = SpecLib::getChunkSize(static_cast<size_t>((step >= 0) ? ((end - begin + step - 1) / step) : ((end - begin + step + 1) / step)), NChunks);
   avg_time = 0.f;
 #if defined(SLSTATS) || defined(SLMINIMALSTATS)
   SpecLib::StatsRunInfo statsRes;

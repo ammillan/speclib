@@ -55,7 +55,7 @@ using profile_clock_t = std::conditional<(std::chrono::high_resolution_clock::is
 #endif
 
 template<typename Ti>
-constexpr size_t getNumIterationsPerChunk(const Ti totalIterations, const size_t numChunks) {
+constexpr size_t getChunkSize(const Ti totalIterations, const size_t numChunks) {
   return ((size_t)totalIterations - 1u) / numChunks + 1u;
 }
 

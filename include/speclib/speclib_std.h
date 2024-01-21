@@ -493,6 +493,45 @@ private:
 
   CommonSpecInfo_t& mySpecInfo() const noexcept { return SpecInfos[spec_info_idx_]; }
 
+#ifdef SLSTATS
+  void slstats_gather(const bool failed_val) {
+    wtimeVV = std::chrono::duration<double>(wtv1 - wtv0).count() + std::chrono::duration<double>(wtv3 - wtv2).count();
+    if (failed_val) {
+      statsR.pt.gwtimeFF += (wtimeRSs + wtimeVV + wtimeW6 + wtimeOWs + wtimeOPs + wtimeW1o);
+      while(aux_statstiming_flag);
+      const size_t m_paral_threads_ = paral_threads_;
+      for (size_t i = 0; i < m_paral_threads_; i++) {
+        statsR.pt.gwtimeFF += (wtimeRP[i] + wtimeOW[i] + wtimeOP[i] + wtimeW1[i]);
+      }
+    } else {
+      statsR.pt.gwtimeRSs += wtimeRSs;
+      statsR.pt.gwtimeVV += wtimeVV;
+      statsR.pt.gwtimeW6 += wtimeW6;
+      statsR.pt.gwtimeOWs += wtimeOWs;
+      statsR.pt.gwtimeOPs += wtimeOPs;
+      while(aux_statstiming_flag);
+      double ltimeW1 = wtimeW1o;
+      const size_t m_paral_threads_ = paral_threads_;
+      for (size_t i = 0; i < m_paral_threads_; i++) {
+        statsR.pt.gwtimeRP += wtimeRP[i];
+        statsR.pt.gwtimeOW += wtimeOW[i];
+        statsR.pt.gwtimeOP += wtimeOP[i];
+        ltimeW1 += wtimeW1[i];
+      }
+      switch(pre_val_state_) {
+        case 0:
+          statsR.pt.gwtimeOPi += ltimeW1;
+          break;
+        case 1:
+          statsR.pt.gwtimeFF += ltimeW1;
+          break;
+        case 2:
+          statsR.pt.gwtimeW1 += ltimeW1;
+      }
+    }
+  }
+#endif
+
   void trigger_validation()
   {
     if (validation_state_.fetch_sub(1) == 1) {
@@ -557,48 +596,19 @@ private:
 //          ( ((PosStep) ? (end_ >= End) : (end_ == End)) && (cancelled_ptr != nullptr) ) ) {
           ( ((PosStep) ? (end_ >= End) : (end_ <= End)) && (cancelled_ptr != nullptr) ) ) {
         SpecInfos_sync[spec_info_idx_].fetch_xor(reinterpret_cast<std::uintptr_t>(this), std::memory_order_relaxed);
+#ifdef SLSTATS
+        wtv3 = profile_clock_t::now();
+        slstats_gather(prefailed);
+#endif
         free();
       } else {
         SpecInfos_sync[spec_info_idx_].fetch_xor(reinterpret_cast<std::uintptr_t>(this), std::memory_order_relaxed);
         validation_state_.store(-1); // signal RecoverFromFailure that it can free this
-      }
 #ifdef SLSTATS
-      wtv3 = profile_clock_t::now();
-      wtimeVV = std::chrono::duration<double>(wtv1 - wtv0).count() + std::chrono::duration<double>(wtv3 - wtv2).count();
-      if (prefailed) {
-        statsR.pt.gwtimeFF += (wtimeRSs + wtimeVV + wtimeW6 + wtimeOWs + wtimeOPs + wtimeW1o);
-        while(aux_statstiming_flag);
-        const size_t m_paral_threads_ = paral_threads_;
-        for (size_t i = 0; i < m_paral_threads_; i++) {
-          statsR.pt.gwtimeFF += (wtimeRP[i] + wtimeOW[i] + wtimeOP[i] + wtimeW1[i]);
-        }
-      } else {
-        statsR.pt.gwtimeRSs += wtimeRSs;
-        statsR.pt.gwtimeVV += wtimeVV;
-        statsR.pt.gwtimeW6 += wtimeW6;
-        statsR.pt.gwtimeOWs += wtimeOWs;
-        statsR.pt.gwtimeOPs += wtimeOPs;
-        while(aux_statstiming_flag);
-        double ltimeW1 = wtimeW1o;
-        const size_t m_paral_threads_ = paral_threads_;
-        for (size_t i = 0; i < m_paral_threads_; i++) {
-          statsR.pt.gwtimeRP += wtimeRP[i];
-          statsR.pt.gwtimeOW += wtimeOW[i];
-          statsR.pt.gwtimeOP += wtimeOP[i];
-          ltimeW1 += wtimeW1[i];
-        }
-        switch(pre_val_state_) {
-          case 0:
-            statsR.pt.gwtimeOPi += ltimeW1;
-            break;
-          case 1:
-            statsR.pt.gwtimeFF += ltimeW1;
-            break;
-          case 2:
-            statsR.pt.gwtimeW1 += ltimeW1;
-        }
-      }
+        wtv3 = profile_clock_t::now();
+        slstats_gather(prefailed);
 #endif
+      }
     }
   }
 
