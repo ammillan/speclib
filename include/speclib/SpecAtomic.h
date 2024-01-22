@@ -932,12 +932,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	std::atomic<T>* operator&() noexcept {																// & Address-of operator
+#ifdef SLSPECATOMIC_OVERLOAD_ADDRESSOF_OP
+	std::atomic<T>* operator&() noexcept {																// & Address-of operator (??)
 		return &value;
 	}
-	std::atomic<T>* operator&() volatile noexcept {														// & Address-of operator
+	std::atomic<T>* operator&() volatile noexcept {														// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 //	SpecAtomic operator,(SpecAtomic& obj) noexcept {													// , Comma operator (not applicable)
 //		return SpecAtomic{value, (obj.value)};
@@ -1257,6 +1259,13 @@ public:
 	}
 	std::atomic<T>& getValueRef() volatile noexcept {											// Custom function to get the internal value by reference directly (normally shouldn't be necessary either)
 		return value;
+	}
+
+	std::atomic<T>* getValuePtr() noexcept {													// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	std::atomic<T>* getValuePtr() volatile noexcept {											// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	SpecAtomic* getObjPtr() noexcept {															// Custom function to get a pointer to the object

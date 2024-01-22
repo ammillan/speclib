@@ -492,12 +492,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	constexpr T* operator&() noexcept {											// & Address-of operator
+#ifdef SLSPECREAL_OVERLOAD_ADDRESSOF_OP
+	constexpr T* operator&() noexcept {											// & Address-of operator (??)
 		return &value;
 	}
-	constexpr T* operator&() volatile noexcept {								// & Address-of operator
+	constexpr T* operator&() volatile noexcept {								// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 	constexpr SpecRealInd operator,(SpecRealInd& obj) noexcept {				// , Comma operator
 		return SpecRealInd{(value, (obj.value))};
@@ -534,6 +536,14 @@ public:
 
 	constexpr volatile T& getValueRef() volatile noexcept {	// Custom function to get the internal value by reference directly
 		return value;
+	}
+
+	constexpr T* getValuePtr() noexcept {					// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	
+	constexpr T* getValuePtr() volatile noexcept {			// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	constexpr SpecRealInd* getObjPtr() noexcept {			// Custom function to get a pointer to the object
@@ -1077,12 +1087,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	constexpr T* operator&() noexcept {											// & Address-of operator
+#ifdef SLSPECREAL_OVERLOAD_ADDRESSOF_OP
+	constexpr T* operator&() noexcept {											// & Address-of operator (??)
 		return &value;
 	}
-	constexpr T* operator&() volatile noexcept {								// & Address-of operator
+	constexpr T* operator&() volatile noexcept {								// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 	constexpr SpecRealInd operator,(SpecRealInd& obj) noexcept {				// , Comma operator
 		return SpecRealInd{(value, (obj.value))};
@@ -1119,6 +1131,14 @@ public:
 
 	constexpr volatile T& getValueRef() volatile noexcept {			// Custom function to get the internal value by reference directly
 		return value;
+	}
+
+	constexpr T* getValuePtr() noexcept {					// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	
+	constexpr T* getValuePtr() volatile noexcept {			// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	constexpr SpecRealInd* getObjPtr() noexcept {					// Custom function to get a pointer to the object
@@ -1661,12 +1681,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	constexpr T* operator&() noexcept {											// & Address-of operator
+#ifdef SLSPECREAL_OVERLOAD_ADDRESSOF_OP
+	constexpr T* operator&() noexcept {											// & Address-of operator (??)
 		return &value;
 	}
-	constexpr T* operator&() volatile noexcept {								// & Address-of operator
+	constexpr T* operator&() volatile noexcept {								// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 	constexpr SpecRealInd operator,(SpecRealInd& obj) noexcept {				// , Comma operator
 		return SpecRealInd{(value, (obj.value))};
@@ -1703,6 +1725,14 @@ public:
 
 	constexpr volatile T& getValueRef() volatile noexcept {			// Custom function to get the internal value by reference directly
 		return value;
+	}
+
+	constexpr T* getValuePtr() noexcept {					// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	
+	constexpr T* getValuePtr() volatile noexcept {			// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	constexpr SpecRealInd* getObjPtr() noexcept {					// Custom function to get a pointer to the object
@@ -2252,12 +2282,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	constexpr T* operator&() noexcept {											// & Address-of operator
+#ifdef SLSPECREAL_OVERLOAD_ADDRESSOF_OP
+	constexpr T* operator&() noexcept {											// & Address-of operator (??)
 		return &value;
 	}
-	constexpr T* operator&() volatile noexcept {								// & Address-of operator
+	constexpr T* operator&() volatile noexcept {								// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 	constexpr SpecRealInd operator,(SpecRealInd& obj) noexcept {				// , Comma operator
 		return SpecRealInd{(value, (obj.value))};
@@ -2294,6 +2326,14 @@ public:
 
 	constexpr volatile T& getValueRef() volatile noexcept {			// Custom function to get the internal value by reference directly
 		return value;
+	}
+
+	constexpr T* getValuePtr() noexcept {					// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	
+	constexpr T* getValuePtr() volatile noexcept {			// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	constexpr SpecRealInd* getObjPtr() noexcept {					// Custom function to get a pointer to the object
@@ -2869,12 +2909,14 @@ public:
 	// Overload of other operators
 	////////////////////////////////////
 
-	constexpr T* operator&() noexcept {											// & Address-of operator
+#ifdef SLSPECREAL_OVERLOAD_ADDRESSOF_OP
+	constexpr T* operator&() noexcept {											// & Address-of operator (??)
 		return &value;
 	}
-	constexpr T* operator&() volatile noexcept {								// & Address-of operator
+	constexpr T* operator&() volatile noexcept {								// & Address-of operator (??)
 		return &value;
 	}
+#endif
 
 	constexpr SpecRealInd operator,(SpecRealInd& obj) noexcept {				// , Comma operator
 		return SpecRealInd{(value, (obj.value))};
@@ -2911,6 +2953,14 @@ public:
 
 	constexpr volatile T& getValueRef() volatile noexcept {			// Custom function to get the internal value by reference directly
 		return value;
+	}
+
+	constexpr T* getValuePtr() noexcept {					// Custom function to get the pointer of the internal value directly
+		return &value;
+	}
+	
+	constexpr T* getValuePtr() volatile noexcept {			// Custom function to get the pointer of the internal value directly
+		return &value;
 	}
 
 	constexpr SpecRealInd* getObjPtr() noexcept {					// Custom function to get a pointer to the object
