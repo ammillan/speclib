@@ -1179,11 +1179,11 @@ public:
 		value.notify_one();
 	}
 
-	void wait(T old, std::memory_order memorder = std::memory_order::seq_cst) const noexcept {
+	void wait(T old, std::memory_order memorder = std::memory_order_seq_cst) const noexcept {
 		value.wait(old, memorder);
 	}
 
-	void wait(T old, std::memory_order memorder = std::memory_order::seq_cst) const volatile noexcept {
+	void wait(T old, std::memory_order memorder = std::memory_order_seq_cst) const volatile noexcept {
 		value.wait(old, memorder);
 	}
 
